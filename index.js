@@ -3,6 +3,12 @@ import axios from 'axios';
 class ruCaptcha {
 
     constructor( settings ) {
+
+        const checkKey = () => {
+            if ( !this.key )
+                throw new Error( 'Api key is required' );
+        };
+
         this.key   = null;
         this.in    = 'http://rucaptcha.com/in.php';
         this.res   = 'http://rucaptcha.com/res.php';
@@ -13,6 +19,8 @@ class ruCaptcha {
         Object.keys( settings ).forEach( key => {
             this[ key ] = settings[ key ];
         } );
+
+        checkKey();
 
         /**
          * Solve google recaptcha.
@@ -115,10 +123,6 @@ class ruCaptcha {
      * @return {ruCaptcha}
      */
     static create( settings = {} ) {
-
-        if ( !settings.hasOwnProperty( 'key' ) )
-            throw new Error( 'Api key is required' );
-
         return (new ruCaptcha( settings ));
     }
 }
