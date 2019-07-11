@@ -39,6 +39,15 @@ class ruCaptcha {
             return await waitResponse( id );
         };
 
+        this.imageFromBase64 = async str => {
+            const id = await getId( {
+                body: str,
+                method: 'base64',
+            } );
+
+            return await waitResponse( id );
+        };
+
         /**
          * Get captcha id from ruCaptcha
          *
@@ -69,7 +78,7 @@ class ruCaptcha {
 
             return new Promise( ( resolve ) => {
                 axios.get( url, {
-                    params: Object.assign( {key: this.key, json: 1}, params ),
+                    params: {...Object.assign( {key: this.key, json: 1}, params )},
                 } ).then( ( {data} ) => resolve( data ) )
                      .catch( err => {
                          throw new Error( err.toString() );
