@@ -30,7 +30,7 @@ rc.google('google site key', 'page url')
 .catch(err => {...})
 ```
 
-##Solve a google recaptcha v3
+## Solve a google recaptcha v3
 ```
 try {
    const captcha = await rc.google('google site key', 'page url', {
