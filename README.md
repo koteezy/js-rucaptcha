@@ -5,10 +5,8 @@ Little wrapper for rucaptcha API
 
 ## Create instance
 ```
-const rc := ruCaptcha.create({
+const rc = ruCaptcha.create({
     key: null, // Required: Your api key.
-    in: 1, // Not required|Default: http://rucaptcha.com/in.php
-    res: 1, // Not required|Default: http://rucaptcha.com/res.php
     delay: 1000, // Not required|Default: 1000
     debug: false, // Not required|Default: false
 })
@@ -30,4 +28,16 @@ or
 rc.google('google site key', 'page url')
 .then(captcha => {...})
 .catch(err => {...})
+```
+
+##Solve a google recaptcha v3
+```
+try {
+   const captcha = await rc.google('google site key', 'page url', {
+    user_score: '0.4',
+    version: 'v3'
+   })
+} catch (err) => {
+    console.log(err.toString());
+}
 ```

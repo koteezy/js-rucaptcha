@@ -9,9 +9,9 @@ class ruCaptcha {
                 throw new Error( 'Api key is required' );
         };
 
-        this.key   = null;
-        this.in    = 'http://rucaptcha.com/in.php';
-        this.res   = 'http://rucaptcha.com/res.php';
+        this.key = null;
+        this.in = 'http://rucaptcha.com/in.php';
+        this.res = 'http://rucaptcha.com/res.php';
         this.delay = 1000;
         this.debug = false;
 
@@ -27,13 +27,15 @@ class ruCaptcha {
          *
          * @param googlekey
          * @param pageurl
+         * @param additional Object {version: 'v3', user_score: '0.4'}
          * @return {Promise<void>}
          */
-        this.google = async ( googlekey, pageurl ) => {
+        this.google = async ( googlekey, pageurl, additional = {} ) => {
             const id = await getId( {
                 googlekey,
                 pageurl,
                 method: 'userrecaptcha',
+                ...additional,
             } );
 
             return await waitResponse( id );
@@ -95,18 +97,18 @@ class ruCaptcha {
         const waitResponse = async id => {
 
             let isSolved = false,
-                delay    = async ( ms ) => {
+                delay = async ( ms ) => {
                     return new Promise( res => setTimeout( res, ms ) );
                 };
 
             while ( !isSolved ) {
                 await delay( this.delay );
 
-                const response    = await call( this.res, {
-                          id,
-                          action: 'get',
-                      } ), status = response.status,
-                      request     = response.request;
+                const response = await call( this.res, {
+                        id,
+                        action: 'get',
+                    } ), status = response.status,
+                    request = response.request;
 
                 if ( this.debug )
                     console.log( request );
