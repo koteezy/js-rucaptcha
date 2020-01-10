@@ -38,6 +38,8 @@ class ruCaptcha {
                 ...additional,
             } );
 
+            if ( additional.hasOwnProperty( 'pingback' ) ) return id;
+
             return await waitResponse( id );
         };
 
@@ -79,8 +81,8 @@ class ruCaptcha {
                 console.log( `Fetch: ${url}` );
 
             return new Promise( ( resolve ) => {
-                axios.get( url, {
-                    params: {...Object.assign( {key: this.key, json: 1}, params )},
+                axios.post( url, {
+                    ...Object.assign( {key: this.key, json: 1}, params ),
                 } ).then( ( {data} ) => resolve( data ) )
                      .catch( err => {
                          throw new Error( err.toString() );
