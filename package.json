@@ -9,7 +9,7 @@
   "author": "Koteezy",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "esm": "^3.2.25"
   }
 }
